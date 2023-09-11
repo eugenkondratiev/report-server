@@ -8,16 +8,20 @@ const getDayReportSql = (day, month, year) => {
 }
 
 module.exports = async (_day, _month, _year) => {
+    let data
     try {
         const answer = await dbQuery(getDayReportSql(_day, _month, _year))
-        console.log("ANSWER = ", answer);
+        // console.log("answer.rows = ", answer.rows);
+        // console.log("answer.fields = ", answer.fields);
         const data = {
             rows: answer.rows.map(row => formHourRow(row)),
-            fields: answer.fields.map(field => field.split('`')[0])
+            fields: answer.fields.map(field => field.name).filter(name => name !== 'id')
+
         }
-        console.log("DATA", data);
+        // console.log("DATA", data);
         return data
     } catch (error) {
+        console.log("get day data error", error);
         return error
     }
 }

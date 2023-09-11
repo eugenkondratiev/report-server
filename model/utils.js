@@ -44,15 +44,14 @@ const arrFromObjectArrray = (objArr, prop = "dtm") => {
 }
 //==============================================================================
 const formHourRow = (row) => {
-    const hourRow = [];
+    const [id, dt, ...rest] = row
+    let hourRow;
     try {
-        for (const prop in row) {
-            if (row.hasOwnProperty(prop)) {
-                if (prop !== "id") {
-                    prop == "dt" ? hourRow.push(getDateTimeFromMySql(row[prop])) : hourRow.push(row[prop].toFixed(4));
-                };
-            }
-        }
+        hourRow = [
+            getDateTimeFromMySql(dt),
+            ...rest.map(value => value.toFixed(3))
+        ]
+        // console.log(hourRow);
     } catch (error) {
         console.log(error.message);
     } finally {
