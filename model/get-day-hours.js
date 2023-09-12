@@ -1,14 +1,15 @@
 const { dbQuery } = require('./db-local');
 const { getNiceMonth, getDateTimeFromMySql } = require('./utils')
+const {HOURS_TABLE}= require('../utils/constants')
 
 const getDayReportSql = (day, month, year) => {
     const startDay = formDayStr(day, month, year);
-    return `SELECT *  FROM eco.hourseco1 where dt between '${startDay}' and DATE_ADD('${startDay}', INTERVAL 23 hour)`;
+    return `SELECT *  FROM ${HOURS_TABLE} where dt between '${startDay}' and DATE_ADD('${startDay}', INTERVAL 23 hour)`;
 }
 
 const monthDatesSql = (month, year) => {
     const mm = getNiceMonth(month);
-    return `select distinct DATE_ADD(DATE(dt), INTERVAL 8 hour) as dtm  from eco.hourseco1 where month(dt) ='${mm}' and year(dt) = '${year}' `;//order by dt asc` ; 
+    return `select distinct DATE_ADD(DATE(dt), INTERVAL 8 hour) as dtm  from ${HOURS_TABLE} where month(dt) ='${mm}' and year(dt) = '${year}' `;//order by dt asc` ; 
 }
 
 module.exports = async (_month, _year) => {

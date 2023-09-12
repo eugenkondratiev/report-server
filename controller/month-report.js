@@ -1,6 +1,7 @@
 const getDayHours = require('../model/get-day-hours');
 const getParams = require('../model/get-params');
 const getHourData = require('../model/get-hour-data')
+const {HOURS_TABLE}= require('../utils/constants')
 
 const response = require('../response');
 
@@ -12,7 +13,7 @@ const getDaySql = (hourString, params) => {
                 ? `MAX(${param})`
                 : params[param].type === 1 ? `SUM(${param})` : `AVG(${param})`
     })
-    return `SELECT dt, ${paramsList.join(", ")} FROM eco.hourseco1 where dt between '${hourString}' and DATE_ADD('${hourString}', INTERVAL 23 hour);`
+    return `SELECT dt, ${paramsList.join(", ")} FROM ${HOURS_TABLE} where dt between '${hourString}' and DATE_ADD('${hourString}', INTERVAL 23 hour);`
 }
 
 module.exports = async ({ res, year, month }) => {
