@@ -44,6 +44,7 @@ const arrFromObjectArrray = (objArr, prop = "dtm") => {
 }
 //==============================================================================
 const formHourRow = (row) => {
+    if (!Array.isArray(row)) return null
     const [id, dt, ...rest] = row
     let hourRow;
     try {
@@ -127,5 +128,6 @@ module.exports = {
     arrFromObjectArrray: arrFromObjectArrray,
     getDateTimeFromMySql: getDateTimeFromMySql,
     formHourRow: formHourRow,
-
+    getNiceMonth: getNiceMonth,
+    getNiceday: getNiceday,
 };
